@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import type { PlayersType } from "../../types";
 import { FaUser, FaStar} from "react-icons/fa";
 
 const PlayerCard = ({ player }: { player: PlayersType }) => {
+  const [isSelected, setIsSelected] = useState(false);
+
+
   return (
     <div className="card bg-base-100 border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
       
@@ -97,8 +100,12 @@ const PlayerCard = ({ player }: { player: PlayersType }) => {
           </div>
 
           {/* Choose Button */}
-          <button className="btn btn-primary rounded-lg">
-            Choose Player
+          <button 
+          onClick={() => setIsSelected(true)}
+          className="btn btn-primary rounded-lg"
+          disabled = {isSelected === true ? true : false}
+          >
+            {isSelected === true ? "Selected": "Choose Player"}
           </button>
 
         </div>
