@@ -1,9 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, type Dispatch, type SetStateAction } from "react";
 import type { PlayersType } from "../../types";
 import { FaUser, FaStar} from "react-icons/fa";
+import { toast } from "react-toastify";
 
-const PlayerCard = ({ player }: { player: PlayersType }) => {
+interface PlayerCardProps{
+  player: PlayersType;
+  coin: number;
+  setCoin: Dispatch<SetStateAction<number>>
+  selectedPlayers: PlayersType[]
+  setSelectedPlayers: Dispatch<SetStateAction<PlayersType[]>>
+}
+
+const PlayerCard = ({ player, coin, setCoin, selectedPlayers, setSelectedPlayers}: PlayerCardProps) => {
   const [isSelected, setIsSelected] = useState(false);
+
+  const handleCoin = () => {
+    setIsSelected(true)
+
+    const newCoinPrice = coin - player.price
+
+    if (newCoinPrice >= 0){
+    setCoin(newCoinPrice)
+    toast.success(`${player.playerName} Successfully Purchase!`)
+    }else{
+      alert("Coin is not enough!")
+    }
+  }
 
 
   return (
@@ -101,7 +123,7 @@ const PlayerCard = ({ player }: { player: PlayersType }) => {
 
           {/* Choose Button */}
           <button 
-          onClick={() => setIsSelected(true)}
+          onClick={() => handleCoin()}
           className="btn btn-primary rounded-lg"
           disabled = {isSelected === true ? true : false}
           >
